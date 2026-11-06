@@ -62,6 +62,13 @@ test('conversation history can be deleted without leaving an invalid active chat
   assert.equal(store.active().messages.length, 0);
 });
 
+test('conversation list exposes a menu before deleting a conversation', () => {
+  const source = fs.readFileSync(path.join(__dirname, '../web/app.js'), 'utf8');
+  assert.match(source, /conversation-menu-toggle/);
+  assert.match(source, /deleteButton\.textContent = 'Xóa'/);
+  assert.match(source, /window\.confirm/);
+});
+
 class Element {
   constructor() {this.children = []; this.dataset = {}; this.className = ''; this.value = ''; this.style = {}; this.disabled = false; this.classList = {add: name => {this.className += ` ${name}`;}};}
   append(child) {this.children.push(child);}

@@ -111,12 +111,27 @@ function renderConversationList() {
     button.title = button.textContent;
     button.setAttribute('aria-pressed', String(conversation.id === store.activeId));
     button.addEventListener('click', () => { store.select(conversation.id); renderConversation(); });
+    const menu = document.createElement('div');
+    menu.className = 'conversation-menu';
+    const menuButton = document.createElement('button');
+    menuButton.type = 'button';
+    menuButton.className = 'conversation-menu-toggle';
+    menuButton.title = 'Tùy chọn cuộc trò chuyện';
+    menuButton.setAttribute('aria-label', `Tùy chọn ${PyBanConversations.title(conversation)}`);
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.textContent = '⋯';
+    menuButton.addEventListener('click', event => {
+      event.stopPropagation();
+      const isOpen = menu.hidden;
+      document.querySelectorAll('.conversation-menu').forEach(item => { item.hidden = true; });
+      document.querySelectorAll('.conversation-menu-toggle').forEach(item => { item.setAttribute('aria-expanded', 'false'); });
+      menu.hidden = !isOpen;
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+    });
     const deleteButton = document.createElement('button');
     deleteButton.type = 'button';
     deleteButton.className = 'delete-conversation';
-    deleteButton.title = 'Xóa cuộc trò chuyện';
-    deleteButton.setAttribute('aria-label', `Xóa ${PyBanConversations.title(conversation)}`);
-    deleteButton.textContent = '×';
+    deleteButton.textContent = 'Xóa';
     deleteButton.addEventListener('click', event => {
       event.stopPropagation();
       if (!window.confirm('Bạn có chắc muốn xóa cuộc trò chuyện này không?')) return;
@@ -124,7 +139,9 @@ function renderConversationList() {
       pending.delete(conversation.id);
       renderConversation();
     });
-    item.append(button, deleteButton);
+    menu.append(deleteButton);
+    menu.hidden = true;
+    item.append(button, menuButton, menu);
     conversationList.append(item);
     const option = document.createElement('option');
     option.value = conversation.id;
