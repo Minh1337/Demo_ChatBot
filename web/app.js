@@ -102,6 +102,8 @@ function renderConversationList() {
   conversationList.replaceChildren();
   conversationPicker.replaceChildren();
   [...store.conversations].sort((a, b) => b.updatedAt - a.updatedAt).forEach(conversation => {
+    const item = document.createElement('div');
+    item.className = 'conversation-row';
     const button = document.createElement('button');
     button.type = 'button';
     button.className = `conversation-item${conversation.id === store.activeId ? ' selected' : ''}`;
@@ -109,7 +111,21 @@ function renderConversationList() {
     button.title = button.textContent;
     button.setAttribute('aria-pressed', String(conversation.id === store.activeId));
     button.addEventListener('click', () => { store.select(conversation.id); renderConversation(); });
-    conversationList.append(button);
+    const deleteButton = document.createElement('button');
+    deleteButton.type = 'button';
+    deleteButton.className = 'delete-conversation';
+    deleteButton.title = 'Xóa cuộc trò chuyện';
+    deleteButton.setAttribute('aria-label', `Xóa ${PyBanConversations.title(conversation)}`);
+    deleteButton.textContent = '×';
+    deleteButton.addEventListener('click', event => {
+      event.stopPropagation();
+      if (!window.confirm('Bạn có chắc muốn xóa cuộc trò chuyện này không?')) return;
+      store.remove(conversation.id);
+      pending.delete(conversation.id);
+      renderConversation();
+    });
+    item.append(button, deleteButton);
+    conversationList.append(item);
     const option = document.createElement('option');
     option.value = conversation.id;
     option.textContent = PyBanConversations.title(conversation);

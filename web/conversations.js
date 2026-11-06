@@ -45,6 +45,16 @@
       this.save();
     }
 
+    remove(id) {
+      const index = this.conversations.findIndex(item => item.id === id);
+      if (index < 0) return false;
+      this.conversations.splice(index, 1);
+      if (!this.conversations.length) this.create();
+      else if (this.activeId === id) this.activeId = this.conversations[Math.min(index, this.conversations.length - 1)].id;
+      this.save();
+      return true;
+    }
+
     append(id, message) {
       const conversation = this.conversations.find(item => item.id === id);
       if (!conversation || !validMessage(message)) return;

@@ -47,6 +47,21 @@ test('legacy session is migrated and failed storage is reported', () => {
   assert.equal(failing.active().messages.length, 1);
 });
 
+test('conversation history can be deleted without leaving an invalid active chat', () => {
+  const storage = memoryStorage();
+  const store = new Store(storage);
+  const first = store.activeId;
+  store.append(first, {role:'user', content:'First topic'});
+  const second = store.create().id;
+  store.append(second, {role:'user', content:'Second topic'});
+  assert.equal(store.remove(first), true);
+  assert.equal(store.conversations.some(item => item.id === first), false);
+  assert.equal(store.activeId, second);
+  assert.equal(store.remove(second), true);
+  assert.equal(store.conversations.length, 1);
+  assert.equal(store.active().messages.length, 0);
+});
+
 class Element {
   constructor() {this.children = []; this.dataset = {}; this.className = ''; this.value = ''; this.style = {}; this.disabled = false; this.classList = {add: name => {this.className += ` ${name}`;}};}
   append(child) {this.children.push(child);}

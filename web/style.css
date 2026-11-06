@@ -35,9 +35,13 @@ button:focus-visible, a:focus-visible, select:focus-visible, .chat-scroll:focus-
 .nav-icon { font-size: 21px; line-height: 1; }
 .history-label { margin-top: 30px; margin-bottom: 12px; }
 .conversation-list { flex: 1; min-height: 70px; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 5px; padding: 2px 2px 12px; }
-.conversation-item { width: 100%; flex-shrink: 0; text-align: left; border: 1px solid transparent; border-radius: 9px; background: transparent; color: #65746a; padding: 12px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.conversation-item:hover { background: #e7ede3; }
+.conversation-row { display: flex; align-items: stretch; min-width: 0; border-radius: 9px; }
+.conversation-item { min-width: 0; flex: 1; text-align: left; border: 1px solid transparent; border-radius: 9px; background: transparent; color: #65746a; padding: 12px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.conversation-item:hover, .conversation-row:focus-within .conversation-item { background: #e7ede3; }
 .conversation-item.selected { color: #2d684b; background: #fff; border-color: #e0e8dc; box-shadow: 0 2px 5px #283b3205; font-weight: 600; }
+.delete-conversation { display: grid; place-items: center; width: 30px; border: 1px solid transparent; border-radius: 0 9px 9px 0; background: transparent; color: #9aaba0; font-size: 18px; opacity: 0; cursor: pointer; }
+.conversation-row:hover .delete-conversation, .conversation-row:focus-within .delete-conversation { opacity: 1; }
+.delete-conversation:hover { color: #b6534b; background: #f9e9e5; }
 .knowledge { flex-shrink: 0; border-top: 1px solid #dfe6db; margin-top: 10px; padding: 16px 8px 12px; }
 .knowledge summary { display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #6e7d72; font-size: 11px; list-style: none; }
 .knowledge summary::-webkit-details-marker { display: none; }
