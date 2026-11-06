@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#f7f8f5">
+  <meta name="description" content="PyBạn — chatbot hỏi đáp tiếng Việt, ghi nhớ ngữ cảnh trong cuộc trò chuyện.">
+  <title>PyBạn — Chatbot hỏi đáp</title>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="PyBạn trang chủ">
+        <span class="brand-mark" aria-hidden="true">py</span>
+        <span><strong>PyBạn</strong><small>AI CHAT ASSISTANT</small></span>
+      </a>
+      <div class="side-label">TRÒ CHUYỆN</div>
+      <button class="nav-item active" id="new-chat" type="button"><span class="nav-icon">＋</span> Trò chuyện mới</button>
+      <div class="side-label history-label">LỊCH SỬ HỘI THOẠI</div>
+      <nav id="conversation-list" class="conversation-list" aria-label="Các cuộc trò chuyện đã lưu"></nav>
+      <details class="knowledge">
+      <summary>Khám phá tài liệu Python <span>⌄</span></summary>
+      <div class="topic-list">
+        <div><i class="topic-dot mint"></i>Biến &amp; kiểu dữ liệu</div>
+        <div><i class="topic-dot blue"></i>Điều kiện if/else</div>
+        <div><i class="topic-dot orange"></i>Vòng lặp</div>
+        <div><i class="topic-dot violet"></i>Hàm</div>
+        <div><i class="topic-dot rose"></i>Lỗi thường gặp</div>
+        <div><i class="topic-dot mint"></i>Bài tập Python nhập môn</div>
+        <div><i class="topic-dot blue"></i>Hỏi đáp tổng quát</div>
+      </div>
+      </details>
+      <div class="sidebar-note">
+        <span class="note-icon">✦</span>
+        <strong>Ngữ cảnh cuộc trò chuyện</strong>
+        <p>Hội thoại được tự động lưu trên trình duyệt này. Tạo trò chuyện mới để bắt đầu chủ đề khác.</p>
+      </div>
+      <div class="sidebar-bottom"><span class="online-dot"></span> Chạy trên máy của bạn</div>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <div class="breadcrumb"><span class="header-eyebrow">KHÔNG GIAN TRÒ CHUYỆN</span><b id="conversation-title">Cuộc trò chuyện mới</b></div>
+        <div class="topbar-right"><select id="conversation-picker" aria-label="Mở cuộc trò chuyện đã lưu"></select><span class="scope-pill"><i></i>Tự động lưu</span><button class="icon-button" id="clear-chat" title="Tạo cuộc trò chuyện mới" aria-label="Tạo cuộc trò chuyện mới">＋</button></div>
+      </header>
+
+      <p id="storage-notice" class="storage-notice" role="alert" hidden></p>
+      <div class="chat-scroll" id="chat-scroll" tabindex="0" aria-label="Nội dung hội thoại">
+      <section class="conversation" id="conversation" aria-live="polite">
+        <div class="welcome" id="welcome">
+          <div class="welcome-orb"><span>Py</span><i>✦</i></div>
+          <div class="eyebrow">MỘT Ý TƯỞNG MỚI BẮT ĐẦU TỪ ĐÂY</div>
+          <h1>Chào bạn, mình là <em>PyBạn.</em></h1>
+          <p class="welcome-copy">Cùng tìm câu trả lời, học điều mới và gỡ rối những bài toán.<br>Bạn muốn bắt đầu từ đâu?</p>
+          <div class="suggestion-grid">
+            <button class="suggestion" data-prompt="Giải thích trí tuệ nhân tạo bằng một ví dụ đời thường."><span class="suggestion-icon orange">✦</span><span><b>Hỏi đáp tổng quát</b><small>Hỏi AI về điều bạn đang tò mò</small></span><span class="arrow">↗</span></button>
+            <button class="suggestion" data-prompt="Giúp tôi lập kế hoạch học Python cho người mới trong một tuần."><span class="suggestion-icon violet">▤</span><span><b>Lên kế hoạch học tập</b><small>Một lộ trình vừa sức cho bạn</small></span><span class="arrow">↗</span></button>
+            <button class="suggestion" data-prompt="Hàm trong Python khai báo và gọi như thế nào?"><span class="suggestion-icon rose">!</span><span><b>Tra cứu Python</b><small>Câu trả lời có thể kèm nguồn</small></span><span class="arrow">↗</span></button>
+            <button class="suggestion" data-prompt="Bạn có thể giúp tôi code một bài toán không?"><span class="suggestion-icon blue">⌘</span><span><b>Cùng giải một bài toán</b><small>Gửi đề bài để cùng phân tích</small></span><span class="arrow">↗</span></button>
+          </div>
+          <div class="welcome-foot"><span>⌁</span> Với câu hỏi Python, PyBạn có thể kèm nguồn tham khảo trong câu trả lời.</div>
+        </div>
+        <div class="message-list" id="message-list"></div>
+      </section>
+      </div>
+
+      <footer class="composer-wrap">
+        <form class="composer" id="chat-form">
+          <textarea id="question" rows="1" maxlength="1000" placeholder="Nhắn tin cho PyBạn..." aria-label="Nhập câu hỏi"></textarea>
+          <div class="composer-tools"><span class="composer-hint"><kbd>Enter</kbd> gửi <span>·</span> <kbd>Shift + Enter</kbd> xuống dòng</span><button class="send-button" id="send-button" type="submit" aria-label="Gửi câu hỏi">↑</button></div>
+        </form>
+        <p class="disclaimer">Lịch sử lưu trên trình duyệt này. Tin nhắn và ngữ cảnh gần đây được gửi tới OpenRouter để trả lời.</p>
+      </footer>
+    </main>
+  </div>
+  <script src="/assets/conversations.js" defer></script>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

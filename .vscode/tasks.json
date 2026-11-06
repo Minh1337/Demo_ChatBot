@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "PyBan: Setup environment",
+      "type": "process",
+      "command": "cmd.exe",
+      "args": ["/c", "${workspaceFolder}\\setup.bat"],
+      "problemMatcher": []
+    },
+    {
+      "label": "PyBan: Run server",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "uvicorn", "app:app", "--host", "127.0.0.1", "--port", "8765", "--reload"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}
