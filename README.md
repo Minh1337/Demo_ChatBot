@@ -75,7 +75,6 @@ setup.bat, run.bat     Cài đặt và chạy trên Windows
 - [Bảng tình huống kiểm thử](docs/TEST_CASES_VI.md)
 - [Kịch bản video minh họa 2–3 phút](docs/DEMO_SCRIPT_VI.md)
 - [Thiết kế giao diện và kiểm tra cuộn](docs/UI_LAYOUT_VI.md)
-- [Chẩn đoán lỗi OpenRouter và phân biệt phần trăm sử dụng](docs/OPENROUTER_TROUBLESHOOTING_VI.md)
 
 ## Hạn chế hiện biết
 
